@@ -4,13 +4,14 @@
 module RRSED
   module Galois
     class Field
+      attr_reader :primitive
       attr_reader :power
       attr_reader :size
 
       def initialize(primitive)
         @primitive = primitive
         @power = primitive.size - 1
-        @size = 1 << @power
+        @size = (1 << @power) - 1
 
         generate_exp
         generate_log
@@ -18,26 +19,37 @@ module RRSED
 
       public
       def add(x, y)
-        raise unless x.kind_of? Fixnum
-        raise unless y.kind_of? Fixnum
-        raise if x < 0 || x > @size - 1
-        raise if y < 0 || y > @size - 1
+        raise unless valid?(x)
+        raise unless valid?(y)
 
         x ^ y
       end
 
       public
+      def sub(x, y)
+        add(x, y)
+      end
+
+      public
       def mul(x, y)
-        raise unless x.kind_of? Fixnum
-        raise unless y.kind_of? Fixnum
-        raise if x < 0 || x > @size - 1
-        raise if y < 0 || y > @size - 1
+        raise unless valid?(x)
+        raise unless valid?(y)
 
         return 0 if x == 0 || y == 0
         return x if y == 1
         return y if x == 1
 
         @exp[(@log[x] + @log[y]) % @size]
+      end
+
+      public
+      def div(x, y)
+        raise unless valid?(x)
+        raise unless valid?(y)
+
+        return 0 if x == 0 || y == 0
+
+        @exp[(@log[x] - @log[y] + @size) % @size]
       end
 
       private
@@ -55,7 +67,7 @@ module RRSED
         @exp << primitive_value
 
         mask = mask >> 1
-        (@power + 1 .. @size - 2).each do |i|
+        (@power + 1 .. @size - 1).each do |i|
           if @exp[-1] >= mask
             @exp << (primitive_value ^ ((@exp[-1] ^ mask) << 1))
           else
@@ -70,9 +82,17 @@ module RRSED
       def generate_log
         @log = [nil]
 
-        (1 .. @size - 1).each do |i|
+        (1 .. @size).each do |i|
           @log << @exp.index(i)
         end
+      end
+
+      private
+      def valid?(x)
+        return false unless x.kind_of? Fixnum
+        return false if x < 0 || x > @size
+
+        true
       end
     end
   end
