@@ -18,9 +18,17 @@ module RRSED
       end
 
       public
+      def in_field?(x)
+        return false unless x.kind_of? Fixnum
+        return false if x < 0 || x > @size
+
+        true
+      end
+
+      public
       def add(x, y)
-        raise unless valid?(x)
-        raise unless valid?(y)
+        raise unless in_field?(x)
+        raise unless in_field?(y)
 
         x ^ y
       end
@@ -32,8 +40,8 @@ module RRSED
 
       public
       def mul(x, y)
-        raise unless valid?(x)
-        raise unless valid?(y)
+        raise unless in_field?(x)
+        raise unless in_field?(y)
 
         return 0 if x == 0 || y == 0
         return x if y == 1
@@ -44,8 +52,8 @@ module RRSED
 
       public
       def div(x, y)
-        raise unless valid?(x)
-        raise unless valid?(y)
+        raise unless in_field?(x)
+        raise unless in_field?(y)
 
         return 0 if x == 0 || y == 0
 
@@ -85,14 +93,6 @@ module RRSED
         (1 .. @size).each do |i|
           @log << @exp.index(i)
         end
-      end
-
-      private
-      def valid?(x)
-        return false unless x.kind_of? Fixnum
-        return false if x < 0 || x > @size
-
-        true
       end
     end
   end
