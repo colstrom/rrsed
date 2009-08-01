@@ -9,6 +9,7 @@ module RRSED
   module Galois
     describe Element do
       field = Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
+      another_field = Field.new([1, 0, 1, 1]) # x^3 + x^2 + 1
       x = Element.new(field, 10)
       y = Element.new(field, 30)
 
@@ -43,12 +44,20 @@ module RRSED
         lambda { x + 30 }.should raise_error
       end
 
+      it "should raise error on different rvalue field for add" do
+        lambda { x + Element.new(another_field, 1) }.should raise_error
+      end
+
       it "should do subs properly" do
         (x - y).value.should == 20
       end
 
       it "should raise error on inproper rvalue type for sub" do
         lambda { x - 30 }.should raise_error
+      end
+
+      it "should raise error on different rvalue field for sub" do
+        lambda { x - Element.new(another_field, 1) }.should raise_error
       end
 
       it "should do muls properly" do
@@ -59,12 +68,20 @@ module RRSED
         lambda { x * 30 }.should raise_error
       end
 
+      it "should raise error on different rvalue field for mul" do
+        lambda { x * Element.new(another_field, 1) }.should raise_error
+      end
+
       it "should do divs properly" do
         (x / y).value.should == 244
       end
 
       it "should raise error on inproper rvalue type for div" do
         lambda { x / 30 }.should raise_error
+      end
+
+      it "should raise error on different rvalue field for div" do
+        lambda { x / Element.new(another_field, 1) }.should raise_error
       end
     end
   end
