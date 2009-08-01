@@ -68,7 +68,7 @@ module RRSED
         primitive_value = 0
         (0 .. @power - 1).each do |i|
           @exp << mask
-          primitive_value = primitive_value | mask if @primitive.reverse[i] == 1
+          primitive_value = primitive_value | mask if @primitive[i] == 1
           mask = mask << 1
         end
 

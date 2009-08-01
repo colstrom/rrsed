@@ -8,10 +8,10 @@ require "rrsed/galois/field"
 module RRSED
   module Galois
     describe Field do
-      field = Field.new([1, 0, 0, 0, 1, 1, 1, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
+      field = Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
 
       it "should have proper primitive" do
-        field.primitive.should == [1, 0, 0, 0, 1, 1, 1, 0, 1]
+        field.primitive.should == [1, 0, 1, 1, 1, 0, 0, 0, 1]
       end
 
       it "should have proper power" do

@@ -8,7 +8,7 @@ require "rrsed/galois/element"
 module RRSED
   module Galois
     describe Element do
-      field = Field.new([1, 0, 0, 0, 1, 1, 1, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
+      field = Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
       x = Element.new(field, 10)
       y = Element.new(field, 30)
 
