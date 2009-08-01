@@ -3,7 +3,7 @@
 
 $: << "lib"
 
-require "galois/element"
+require "rrsed/galois/element"
 
 module RRSED
   module Galois

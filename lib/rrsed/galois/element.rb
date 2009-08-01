@@ -1,7 +1,7 @@
 # Copyright (c) 2009 Andrew Kirilenko
 # This software is made available under the terms of the MIT License.
 
-require "galois/field"
+require "rrsed/galois/field"
 
 module RRSED
   module Galois
