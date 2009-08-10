@@ -18,6 +18,13 @@ module RRSED
       end
 
       public
+      def ==(o)
+        return false unless o.kind_of? Field
+
+        @primitive == o.primitive
+      end
+
+      public
       def in_field?(x)
         return false unless x.kind_of? Fixnum
         return false if x < 0 || x > @size
@@ -35,7 +42,10 @@ module RRSED
 
       public
       def sub(x, y)
-        add(x, y)
+        raise unless in_field?(x)
+        raise unless in_field?(y)
+
+        x ^ y
       end
 
       public

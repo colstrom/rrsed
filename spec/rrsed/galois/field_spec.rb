@@ -10,6 +10,12 @@ module RRSED
     describe Field do
       field = Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
 
+      it "should properly test for equality" do
+        (field == Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1])).should == true
+        (field == Field.new([1, 0, 1, 1])).should == false
+        (field == "yo").should == false
+      end
+
       it "should have proper primitive" do
         field.primitive.should == [1, 0, 1, 1, 1, 0, 0, 0, 1]
       end

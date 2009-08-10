@@ -18,6 +18,13 @@ module RRSED
       end
 
       public
+      def ==(o)
+        return false unless o.kind_of? Element
+
+        @field == o.field && @value == o.value
+      end
+
+      public
       def +(o)
         raise unless o.kind_of? Element
         raise unless @field == o.field

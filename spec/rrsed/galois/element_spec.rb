@@ -12,6 +12,14 @@ module RRSED
       another_field = Field.new([1, 0, 1, 1]) # x^3 + x^2 + 1
       x = Element.new(field, 10)
       y = Element.new(field, 30)
+      another_element = Element.new(another_field, 1)
+
+      it "should properly test for equality" do
+        (x == Element.new(field, 10)).should == true
+        (x == y).should == false
+        (x == Element.new(Field.new([1, 1, 1, 0, 0, 0, 0, 1, 1]), 10)).should == false
+        (x == "yo").should == false
+      end
 
       it "should have proper field" do
         x.field.should == field
@@ -45,7 +53,7 @@ module RRSED
       end
 
       it "should raise error on different rvalue field for add" do
-        lambda { x + Element.new(another_field, 1) }.should raise_error
+        lambda { x + another_element }.should raise_error
       end
 
       it "should do subs properly" do
@@ -57,7 +65,7 @@ module RRSED
       end
 
       it "should raise error on different rvalue field for sub" do
-        lambda { x - Element.new(another_field, 1) }.should raise_error
+        lambda { x - another_element }.should raise_error
       end
 
       it "should do muls properly" do
@@ -69,7 +77,7 @@ module RRSED
       end
 
       it "should raise error on different rvalue field for mul" do
-        lambda { x * Element.new(another_field, 1) }.should raise_error
+        lambda { x * another_element }.should raise_error
       end
 
       it "should do divs properly" do
@@ -81,7 +89,7 @@ module RRSED
       end
 
       it "should raise error on different rvalue field for div" do
-        lambda { x / Element.new(another_field, 1) }.should raise_error
+        lambda { x / another_element }.should raise_error
       end
     end
   end
