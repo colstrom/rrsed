@@ -9,15 +9,15 @@ module RRSED
   module Galois
     describe Element do
       field = Field.new([1, 0, 1, 1, 1, 0, 0, 0, 1]) # x^8 + x^4 + x^3 + x^2 + 1
-      another_field = Field.new([1, 0, 1, 1]) # x^3 + x^2 + 1
+      another_field = Field.new([1, 1, 1, 0, 0, 0, 0, 1, 1]) # x^8 + x^7 + x^2 + x + 1
       x = Element.new(field, 10)
       y = Element.new(field, 30)
-      another_element = Element.new(another_field, 1)
+      another_element = Element.new(another_field, 10)
 
       it "should properly test for equality" do
         (x == Element.new(field, 10)).should == true
         (x == y).should == false
-        (x == Element.new(Field.new([1, 1, 1, 0, 0, 0, 0, 1, 1]), 10)).should == false
+        (x == another_element).should == false
         (x == "yo").should == false
       end
 
@@ -45,6 +45,7 @@ module RRSED
       end
 
       it "should do adds properly" do
+        (x + y).field.should == field
         (x + y).value.should == 20
       end
 
@@ -57,6 +58,7 @@ module RRSED
       end
 
       it "should do subs properly" do
+        (x - y).field.should == field
         (x - y).value.should == 20
       end
 
@@ -69,6 +71,7 @@ module RRSED
       end
 
       it "should do muls properly" do
+        (x * y).field.should == field
         (x * y).value.should == 204
       end
 
@@ -81,6 +84,7 @@ module RRSED
       end
 
       it "should do divs properly" do
+        (x / y).field.should == field
         (x / y).value.should == 244
       end
 
