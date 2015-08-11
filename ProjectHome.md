@@ -1,0 +1,1 @@
+Ruby implementation of Reed-Solomon Encoder/Decoder.
